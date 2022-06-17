@@ -76,22 +76,24 @@ public class TransactionTest {
         // Without data field
         Transaction transaction = new Transaction();
         transaction.setNonce(1);
-        transaction.setValue(new BigInteger("1000000000000000"));
+        transaction.setValue(new BigInteger("11500313000000000000"));
+        transaction.setReceiver(Address.fromBech32("erd1myj45dn3h0y3l49mjz27c4vssgzqxsc3q2jskerza2089c2k4tcsvu9u8d"));
         transaction.setSender(Address.fromBech32("erd1lta2vgd0tkeqqadkvgef73y0efs6n3xe5ss589ufhvmt6tcur8kq34qkwr"));
-        transaction.setReceiver(Address.fromBech32("erd1p72ru5zcdsvgkkcm9swtvw2zy5epylwgv8vwquptkw7ga7pfvk7qz7snzw"));
         transaction.setGasPrice(1000000000);
-        transaction.setGasLimit(50000);
-        transaction.setChainID("T");
+        transaction.setGasLimit(60000);
+        transaction.setChainID("1");
+        transaction.setData("");
 
         transaction.sign(wallet);
 
-        assertEquals("eb000037b70dfe3d89abc50214b3ce0c4afbfe66f2b636834d46e33af690f3d0", transaction.computeHash());
+        System.out.println(transaction.serialize());
+        assertEquals("5527ad25b1dbddbd6e971c11370a72b6f0e53edf053d3fc31a65c86b217e5499", transaction.computeHash());
 
         // With data field
         transaction.setData("test data");
 
         transaction.sign(wallet);
 
-        assertEquals("3fb8406c408fbdd9b01ce8c8a0dcbb1a382cba713a132f40d552ec8db63c89a5", transaction.computeHash());
+        assertEquals("d3289e845264f5c93ade8288cfd8aa56a7bd28b9b4b5ae773aca44d2825bef41", transaction.computeHash());
     }
 }
